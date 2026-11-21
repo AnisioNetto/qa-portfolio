@@ -11,7 +11,7 @@ Validar os principais comportamentos de uma API pública, verificando códigos H
 - **Serviço:** JSONPlaceholder
 - **Documentação:** https://jsonplaceholder.typicode.com/
 - **Tipo:** API REST pública para testes e demonstrações
-- **Dados:** fictícios e destinados a exemplos
+- **Recurso em escopo:** `/posts`
 
 > **Importante:** JSONPlaceholder simula as operações POST, PUT e DELETE. As alterações não são persistidas no servidor.
 
@@ -26,16 +26,16 @@ Validar os principais comportamentos de uma API pública, verificando códigos H
 | CT-005 | Atualizar publicação (simulado) | PUT | `/posts/1` | HTTP 200 e retorno dos dados atualizados |
 | CT-006 | Excluir publicação (simulado) | DELETE | `/posts/1` | HTTP 200 e objeto JSON vazio |
 
-## Validações automatizadas
+## Estratégia e validações automatizadas
 
-Os testes foram implementados em JavaScript na área **Scripts / After response** do Postman, utilizando asserções para validar:
+Os testes foram implementados em JavaScript na área **Scripts / After response** do Postman. As asserções verificam:
 
 - Códigos de status HTTP.
 - Cabeçalho Content-Type.
 - Estrutura e quantidade de itens da resposta.
 - Presença de campos obrigatórios.
 - Tipos de dados.
-- Correspondência entre os dados enviados e retornados.
+- Correspondência entre dados enviados e retornados.
 - Identificador do recurso.
 
 ## Resultado da execução em lote
@@ -45,6 +45,7 @@ Os testes foram implementados em JavaScript na área **Scripts / After response*
 | Indicador | Resultado |
 |---|---:|
 | Requisições executadas | 6 |
+| Iterações | 1 |
 | Testes automatizados | 18 |
 | Aprovados | 18 |
 | Reprovados | 0 |
@@ -53,13 +54,13 @@ Os testes foram implementados em JavaScript na área **Scripts / After response*
 | Duração total | 1,708 s |
 | Tempo médio de resposta | 133 ms |
 
-**Resultado:** 100% das asserções aprovadas na execução em lote.
+**Resultado:** 18/18 asserções aprovadas na execução em lote.
 
-O cenário CT-003 teve uma execução inicial com critério de status incorreto. Após análise da resposta HTTP 404, o critério e o script foram corrigidos e o cenário foi aprovado na reexecução. O histórico está registrado em [execution-results.md](execution-results.md).
+O CT-003 teve uma primeira execução reprovada porque o critério inicial esperava HTTP 200. Após observar HTTP 404, o critério e o script foram corrigidos; a reexecução individual e a execução em lote passaram. O histórico está em [execution-results.md](execution-results.md).
 
 ## Ferramentas e tecnologias
 
-- Postman
+- Postman Collection Runner
 - JavaScript
 - API REST
 - JSON
@@ -72,6 +73,13 @@ O cenário CT-003 teve uma execução inicial com critério de status incorreto.
 ├── collection/
 │   └── api-testing.postman_collection.json
 ├── evidences/
+│   ├── CT-001-listar-posts.png
+│   ├── CT-002-consultar-post.png
+│   ├── CT-003-post-inexistente.png
+│   ├── CT-004-criar-post.png
+│   ├── CT-005-atualizar-post.png
+│   ├── CT-006-excluir-post.png
+│   ├── CT-007-execucao-collection-runner.png
 │   └── README.md
 ├── execution-results.md
 ├── final-report.md
@@ -81,17 +89,16 @@ O cenário CT-003 teve uma execução inicial com critério de status incorreto.
 
 ## Artefatos
 
-- [Coleção Postman](collection/api-testing.postman_collection.json)
+- [Coleção Postman para importar](collection/api-testing.postman_collection.json)
 - [Requisitos](requirements.md)
 - [Casos de teste](test-cases.md)
 - [Registro de execução](execution-results.md)
 - [Relatório final](final-report.md)
-- [Evidências](evidences/)
+- [Galeria de evidências](evidences/README.md)
 
 ## Próximas melhorias
 
-- Versionar as capturas de tela da execução em lote.
-- Ampliar os cenários negativos com base no contrato da API.
+- Ampliar cenários negativos para payloads inválidos, conforme contrato da API.
 - Avaliar execução automatizada via Newman ou Postman CLI.
 
 ## Aviso
