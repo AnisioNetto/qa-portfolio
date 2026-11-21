@@ -83,8 +83,8 @@
           "script": {
             "type": "text/javascript",
             "exec": [
-              "pm.test('JSONPlaceholder retorna objeto vazio com status 200 neste cenário', function () { pm.response.to.have.status(200); pm.expect(pm.response.json()).to.be.an('object').that.is.empty; });",
-              "pm.test('Registrar comportamento documentado da API', function () { pm.expect(pm.response.json()).to.eql({}); });"
+              "pm.test('Status code deve ser 404 para post inexistente', function () { pm.response.to.have.status(404); });",
+              "pm.test('Resposta deve ser um objeto JSON vazio', function () { pm.expect(pm.response.json()).to.eql({}); });"
             ]
           }
         }
