@@ -219,3 +219,41 @@ JSONPlaceholder simula a atualização e não persiste as alterações no servid
 ### Situação do caso
 
 CT-005 aprovado. CT-001 a CT-005 estão aprovados; CT-006 permanece pendente.
+
+
+## Execução 007 — CT-006: Excluir publicação
+
+| Campo | Resultado |
+|---|---|
+| Data da execução | 21/11/2026 |
+| Ferramenta | Postman |
+| Método | DELETE |
+| Endpoint | `{{baseUrl}}/posts/1` |
+| Status HTTP | 200 OK |
+| Tempo de resposta observado | 159 ms |
+| Tamanho da resposta observado | 910 B |
+| Corpo observado | Objeto JSON vazio (`{}`) |
+| Resultado | APROVADO |
+
+### Validações automatizadas
+
+| Validação | Resultado |
+|---|---|
+| Status code igual a 200 | PASS |
+| Resposta é um objeto JSON vazio | PASS |
+
+**Resumo do Postman:** 2/2 testes aprovados.
+
+### Análise do QA
+
+A requisição DELETE foi enviada para o recurso de ID 1. A API retornou HTTP 200 OK e objeto JSON vazio. As duas asserções automatizadas foram aprovadas.
+
+O tempo de 159 ms e o tamanho de 910 B foram registrados como observações, não como critérios de aprovação.
+
+### Observação
+
+JSONPlaceholder simula a exclusão; a operação não remove dados persistidos no servidor.
+
+### Situação do caso
+
+CT-006 aprovado. Os seis casos de teste planejados foram executados e aprovados na execução final. CT-003 teve uma primeira execução reprovada devido ao critério incorreto, seguida de correção e reexecução aprovada.
