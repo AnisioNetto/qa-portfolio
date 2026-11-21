@@ -1,0 +1,197 @@
+{
+  "info": {
+    "name": "QA Portfolio - JSONPlaceholder API Testing",
+    "description": "Coleção demonstrativa de testes funcionais de API REST. API pública JSONPlaceholder; operações de escrita são simuladas e não persistem dados.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://jsonplaceholder.typicode.com"
+    }
+  ],
+  "item": [
+    {
+      "name": "GET - Listar posts",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/posts"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code deve ser 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Content-Type deve ser JSON', function () { pm.response.to.have.header('Content-Type'); pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json'); });",
+              "pm.test('Resposta deve ser uma lista com 100 posts', function () { const body = pm.response.json(); pm.expect(body).to.be.an('array').that.has.lengthOf(100); });",
+              "pm.test('Cada post deve possuir id, userId, title e body', function () { const body = pm.response.json(); pm.expect(body[0]).to.have.all.keys('userId', 'id', 'title', 'body'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET - Consultar post existente",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/posts/1"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code deve ser 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('ID retornado deve ser 1', function () { pm.expect(pm.response.json().id).to.eql(1); });",
+              "pm.test('Campos principais devem existir', function () { const body = pm.response.json(); pm.expect(body).to.have.property('userId'); pm.expect(body).to.have.property('title'); pm.expect(body).to.have.property('body'); });",
+              "pm.test('Tipos dos campos devem ser válidos', function () { const body = pm.response.json(); pm.expect(body.userId).to.be.a('number'); pm.expect(body.id).to.be.a('number'); pm.expect(body.title).to.be.a('string'); pm.expect(body.body).to.be.a('string'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET - Consultar post inexistente (limite da API de demonstração)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/posts/9999"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('JSONPlaceholder retorna objeto vazio com status 200 neste cenário', function () { pm.response.to.have.status(200); pm.expect(pm.response.json()).to.be.an('object').that.is.empty; });",
+              "pm.test('Registrar comportamento documentado da API', function () { pm.expect(pm.response.json()).to.eql({}); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST - Criar post (simulado)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"QA Portfolio - Novo post\",\n  \"body\": \"Post criado para demonstrar testes de API com Postman.\",\n  \"userId\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/posts"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code deve ser 201', function () { pm.response.to.have.status(201); });",
+              "pm.test('Resposta deve conter os dados enviados', function () { const body = pm.response.json(); pm.expect(body.title).to.eql('QA Portfolio - Novo post'); pm.expect(body.userId).to.eql(1); });",
+              "pm.test('Resposta deve conter um ID numérico', function () { pm.expect(pm.response.json().id).to.be.a('number'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "PUT - Atualizar post (simulado)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 1,\n  \"title\": \"Post atualizado pelo QA\",\n  \"body\": \"Conteúdo atualizado para validar PUT.\",\n  \"userId\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/posts/1"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code deve ser 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('ID deve permanecer 1', function () { pm.expect(pm.response.json().id).to.eql(1); });",
+              "pm.test('Título deve refletir o valor enviado', function () { pm.expect(pm.response.json().title).to.eql('Post atualizado pelo QA'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "DELETE - Excluir post (simulado)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/posts/1"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code deve ser 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Resposta deve ser um objeto vazio', function () { pm.expect(pm.response.json()).to.eql({}); });"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
