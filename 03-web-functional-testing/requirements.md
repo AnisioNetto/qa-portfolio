@@ -1,12 +1,12 @@
 # Requisitos e regras verificadas — SauceDemo
 
-## Objetivo
+## Objetivo e origem
 
-Registrar os comportamentos funcionais observados e utilizados como base para os testes manuais do fluxo de compra.
+Este documento registra os comportamentos funcionais observados na aplicação SauceDemo durante a exploração e execução dos testes manuais. Os itens abaixo são requisitos/regras identificados para estruturar este exercício de portfólio; **não são uma especificação oficial fornecida pela equipe responsável pelo produto**.
 
 ## Requisitos cobertos
 
-| ID | Requisito / regra | Critério verificado |
+| ID | Requisito / regra observada | Critério verificado |
 |---|---|---|
 | RF-001 | Autenticação | Usuário de demonstração consegue acessar a página Products |
 | RF-002 | Inclusão no carrinho | Ao adicionar o Sauce Labs Backpack, o botão muda para Remove e o indicador do carrinho mostra 1 |
@@ -28,6 +28,20 @@ Registrar os comportamentos funcionais observados e utilizados como base para os
 - Primeiro nome utilizado no teste: Anisio
 - Sobrenome utilizado no teste: QA Tester
 - Código postal utilizado: 38400-000
+
+## Rastreabilidade — requisito, cenário e evidência
+
+| Requisito | Caso de teste | Evidência |
+|---|---|---|
+| RF-001 | [CT-001](test-cases.md#ct-001--login-e-acesso-à-listagem-de-produtos) | [Captura](evidences/CT-001-login-produtos.png) |
+| RF-002 | [CT-002](test-cases.md#ct-002--adicionar-produto-ao-carrinho) | [Captura](evidences/CT-002-adicionar-produto-carrinho.png) |
+| RF-003 | [CT-003](test-cases.md#ct-003--validar-produto-no-carrinho) | [Captura](evidences/CT-003-validar-produto-carrinho.png) |
+| RF-004 | [CT-004](test-cases.md#ct-004--acessar-formulário-de-checkout) | [Captura](evidences/CT-004-acessar-checkout.png) |
+| RF-005 | [CT-005](test-cases.md#ct-005--validar-first-name-obrigatório) | [Captura](evidences/CT-005-validar-first-name-obrigatorio.png) |
+| RF-006 | [CT-006](test-cases.md#ct-006--validar-last-name-obrigatório) | [Captura](evidences/CT-006-validar-last-name-obrigatorio.png) |
+| RF-007 | [CT-007](test-cases.md#ct-007--validar-postal-code-obrigatório) | [Captura](evidences/CT-007-validar-postal-code-obrigatorio.png) |
+| RF-008 | [CT-008](test-cases.md#ct-008--validar-resumo-do-pedido) | [Captura](evidences/CT-008-revisar-resumo-pedido.png) |
+| RF-009 | [CT-009](test-cases.md#ct-009--finalizar-compra) | [Captura](evidences/CT-009-finalizar-compra.png) |
 
 ## Limites do escopo
 
