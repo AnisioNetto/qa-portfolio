@@ -1,21 +1,18 @@
 
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/login.page.js';
+import { test, expect } from '../fixtures/base.fixture.js';
 
 // CT-001 - Login com credenciais válidas
-test('CT-001 - Login com credenciais válidas', async ({ page }) => {
-  const loginPage = new LoginPage(page);
+test('CT-001 - Login com credenciais válidas', async ({ page, loginPage }) => {
 
   await loginPage.acessar();
   await loginPage.realizarLogin('standard_user', 'secret_sauce');
 
   await expect(page).toHaveURL(/inventory.html/);
   await expect(page.locator('[data-test="title"]')).toHaveText('Products');
+
 });
 
-// CT-002 - Login com senha inválida
-test('CT-002 - Login com senha inválida', async ({ page }) => {
-  const loginPage = new LoginPage(page);
+test('CT-002 - Login com senha inválida', async ({ page, loginPage }) => {
 
   await loginPage.acessar();
   await loginPage.realizarLogin('standard_user', 'senha_incorreta');
@@ -26,9 +23,7 @@ test('CT-002 - Login com senha inválida', async ({ page }) => {
   await expect(page).toHaveURL('https://www.saucedemo.com/');
 });
 
-// CT-003 - Login com campos vazios
-test('CT-003 - Login com campos vazios', async ({ page }) => {
-  const loginPage = new LoginPage(page);
+test('CT-003 - Login com campos vazios', async ({ page, loginPage }) => {
 
   await loginPage.acessar();
   await loginPage.clicarLogin();
@@ -39,9 +34,7 @@ test('CT-003 - Login com campos vazios', async ({ page }) => {
   await expect(page).toHaveURL('https://www.saucedemo.com/');
 });
 
-// CT-004 - Login sem informar senha
-test('CT-004 - Login sem informar senha', async ({ page }) => {
-  const loginPage = new LoginPage(page);
+test('CT-004 - Login sem informar senha', async ({ page, loginPage }) => {
 
   await loginPage.acessar();
   await loginPage.usernameInput.fill('standard_user');

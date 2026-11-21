@@ -6,7 +6,7 @@ Projeto de automação de testes funcionais end-to-end desenvolvido com Playwrig
 
 O objetivo é automatizar cenários relacionados ao login, gerenciamento do carrinho e processo de checkout.
 
-O projeto utiliza o padrão **Page Object Model (POM)** para organizar os elementos e as ações das páginas, promovendo reutilização de código, organização e facilidade de manutenção dos testes.
+O projeto utiliza os padrões **Page Object Model (POM)** e **Fixtures** para promover reutilização de código, organização, manutenção e escalabilidade dos testes automatizados.
 
 ## Tecnologias utilizadas
 
@@ -15,15 +15,31 @@ O projeto utiliza o padrão **Page Object Model (POM)** para organizar os elemen
 - Node.js
 - Visual Studio Code
 
-## Padrão de projeto
+## Padrões e arquitetura
 
-Foi implementado o padrão Page Object Model (POM), separando os elementos e as ações das páginas da lógica dos testes.
+### Page Object Model (POM)
+
+O padrão Page Object Model separa os elementos e as ações das páginas da lógica dos testes.
 
 Classes implementadas:
 
 - `LoginPage`: gerenciamento do login e validações relacionadas.
 - `CartPage`: gerenciamento dos produtos no carrinho.
 - `CheckoutPage`: preenchimento dos dados e finalização da compra.
+
+### Fixtures
+
+Foram implementadas Fixtures personalizadas utilizando `base.extend()` do Playwright.
+
+O arquivo `base.fixture.js` disponibiliza automaticamente os objetos das páginas para os testes, evitando a necessidade de instanciar manualmente cada classe.
+
+Fixtures implementadas:
+
+- `loginPage`
+- `cartPage`
+- `checkoutPage`
+
+Essa abordagem melhora a reutilização de código e facilita a manutenção da suíte de testes.
 
 ## Cenários automatizados
 
@@ -51,10 +67,14 @@ Classes implementadas:
 - **Ignorados:** 0
 - **Navegador:** Chromium
 - **Data da execução:** 21/11/2026
-- **Tempo total:** 2,7 segundos
+- **Tempo total:** 2,9 segundos
 - **Workers:** 6
 
-Execução realizada com sucesso utilizando o comando `npx playwright test --project=chromium`.
+Execução realizada com sucesso utilizando o comando:
+
+```bash
+npx playwright test --project=chromium
+```
 
 ## Como executar o projeto
 
@@ -80,14 +100,16 @@ npx playwright show-report
 
 ```text
 04-playwright-automation/
-├── tests/
-│   ├── saucedemo-login.spec.js
-│   ├── saucedemo-cart.spec.js
-│   └── saucedemo-checkout.spec.js
+├── fixtures/
+│   └── base.fixture.js
 ├── pages/
 │   ├── login.page.js
 │   ├── cart.page.js
 │   └── checkout.page.js
+├── tests/
+│   ├── saucedemo-login.spec.js
+│   ├── saucedemo-cart.spec.js
+│   └── saucedemo-checkout.spec.js
 ├── .gitignore
 ├── package.json
 ├── package-lock.json
@@ -97,7 +119,7 @@ npx playwright show-report
 
 ## Ambiente de teste
 
-- **Aplicação:** https://www.saucedemo.com/
+- **Aplicação:** [SauceDemo](https://www.saucedemo.com/)
 - **Tipo de teste:** Automação funcional end-to-end.
 - **Navegador:** Chromium.
 - **Execução:** Local, utilizando Playwright.
