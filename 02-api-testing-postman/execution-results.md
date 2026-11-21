@@ -107,3 +107,37 @@ A análise identificou uma incorreção no resultado esperado documentado, e nã
 - Reexecutar CT-003 após atualizar a requisição local no Postman.
 
 **Situação:** aguardando reexecução com a asserção corrigida.
+
+
+## Reexecução 004 — CT-003: Consultar publicação inexistente
+
+| Campo | Resultado |
+|---|---|
+| Data da execução | 21/11/2026 |
+| Ferramenta | Postman |
+| Método | GET |
+| Endpoint | `{{baseUrl}}/posts/9999` |
+| Status HTTP observado | 404 Not Found |
+| Tempo de resposta observado | 56 ms |
+| Tamanho da resposta observado | 929 B |
+| Corpo observado | Objeto JSON vazio (`{}`) |
+| Resultado | APROVADO |
+
+### Validações automatizadas
+
+| Validação | Resultado |
+|---|---|
+| Status code igual a 404 | PASS |
+| Resposta é objeto JSON vazio | PASS |
+
+**Resumo do Postman:** 2/2 testes aprovados.
+
+### Análise do QA
+
+Após a correção do critério e do script, a requisição foi executada novamente. A API retornou HTTP 404 Not Found e objeto JSON vazio. As duas asserções automatizadas passaram, confirmando que o comportamento observado corresponde ao resultado esperado documentado para este cenário.
+
+O tempo de 56 ms e o tamanho de 929 B foram registrados como observações, não como critérios de aprovação.
+
+### Situação do caso
+
+CT-003 aprovado na reexecução. A execução inicial reprovada foi preservada neste relatório como histórico da identificação e correção da divergência no teste.
