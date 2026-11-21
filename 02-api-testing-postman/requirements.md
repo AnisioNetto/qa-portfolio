@@ -47,7 +47,7 @@ Validar o comportamento dos endpoints do recurso `/posts`, verificando códigos 
 
 - JSONPlaceholder é uma API pública destinada a testes e prototipação.
 - As operações de criação, atualização e exclusão simulam respostas, mas não persistem alterações no servidor.
-- O comportamento de recurso inexistente será documentado conforme a resposta observada, sem assumir que todas as APIs devem responder da mesma forma.
+- Para `GET /posts/9999`, a execução realizada retornou HTTP 404 com objeto JSON vazio. Esse comportamento deve ser tratado como específico desta API e deste cenário, não como regra universal.
 - Os critérios deste projeto descrevem o comportamento esperado desta API específica, não requisitos de um produto comercial real.
 
 ## 6. Estratégia de testes
