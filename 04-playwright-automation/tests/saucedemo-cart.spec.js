@@ -2,10 +2,17 @@
 import { test, expect } from '../fixtures/base.fixture.js';
 
 // CT-005 - Adicionar produto ao carrinho
-test('CT-005 - Adicionar produto ao carrinho', async ({ page, loginPage, cartPage }) => {
-
+test('CT-005 - Adicionar produto ao carrinho', async ({
+  page,
+  loginPage,
+  cartPage
+}) => {
   await loginPage.acessar();
-  await loginPage.realizarLogin('standard_user', 'secret_sauce');
+
+  await loginPage.realizarLogin(
+    process.env.SAUCE_USERNAME,
+    process.env.SAUCE_PASSWORD
+  );
 
   await expect(page).toHaveURL(/inventory.html/);
 
@@ -16,14 +23,19 @@ test('CT-005 - Adicionar produto ao carrinho', async ({ page, loginPage, cartPag
   await expect(
     page.locator('[data-test="remove-sauce-labs-backpack"]')
   ).toBeVisible();
-
 });
 
 // CT-006 - Validar produto no carrinho
-test('CT-006 - Validar produto no carrinho', async ({ page, loginPage, cartPage }) => {
-
+test('CT-006 - Validar produto no carrinho', async ({
+  loginPage,
+  cartPage
+}) => {
   await loginPage.acessar();
-  await loginPage.realizarLogin('standard_user', 'secret_sauce');
+
+  await loginPage.realizarLogin(
+    process.env.SAUCE_USERNAME,
+    process.env.SAUCE_PASSWORD
+  );
 
   await cartPage.adicionarMochila();
   await cartPage.acessarCarrinho();
@@ -35,15 +47,21 @@ test('CT-006 - Validar produto no carrinho', async ({ page, loginPage, cartPage 
   ).toHaveCount(1);
 
   await expect(cartPage.itemQuantity).toHaveText('1');
-  await expect(cartPage.inventoryItemPrice).toHaveText('$29.99');
 
+  await expect(cartPage.inventoryItemPrice).toHaveText('$29.99');
 });
 
 // CT-007 - Remover produto do carrinho
-test('CT-007 - Remover produto do carrinho', async ({ page, loginPage, cartPage }) => {
-
+test('CT-007 - Remover produto do carrinho', async ({
+  loginPage,
+  cartPage
+}) => {
   await loginPage.acessar();
-  await loginPage.realizarLogin('standard_user', 'secret_sauce');
+
+  await loginPage.realizarLogin(
+    process.env.SAUCE_USERNAME,
+    process.env.SAUCE_PASSWORD
+  );
 
   await cartPage.adicionarMochila();
   await cartPage.acessarCarrinho();
@@ -51,6 +69,6 @@ test('CT-007 - Remover produto do carrinho', async ({ page, loginPage, cartPage 
   await cartPage.removerMochila();
 
   await expect(cartPage.cartItems).toHaveCount(0);
-  await expect(cartPage.cartBadge).toHaveCount(0);
 
+  await expect(cartPage.cartBadge).toHaveCount(0);
 });
