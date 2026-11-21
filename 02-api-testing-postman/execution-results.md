@@ -180,3 +180,42 @@ JSONPlaceholder simula a criação e não persiste o novo registro no servidor. 
 ### Situação do caso
 
 CT-004 aprovado. CT-001, CT-002, CT-003 e CT-004 estão aprovados; CT-005 e CT-006 permanecem pendentes.
+
+
+## Execução 006 — CT-005: Atualizar publicação com dados válidos
+
+| Campo | Resultado |
+|---|---|
+| Data da execução | 21/11/2026 |
+| Ferramenta | Postman |
+| Método | PUT |
+| Endpoint | `{{baseUrl}}/posts/1` |
+| Status HTTP | 200 OK |
+| Tempo de resposta observado | 405 ms |
+| Tamanho da resposta observado | 1017 B |
+| ID retornado | 1 |
+| Resultado | APROVADO |
+
+### Validações automatizadas
+
+| Validação | Resultado |
+|---|---|
+| Status code igual a 200 | PASS |
+| ID retornado igual a 1 | PASS |
+| Título retornado igual ao enviado | PASS |
+
+**Resumo do Postman:** 3/3 testes aprovados.
+
+### Análise do QA
+
+A requisição PUT foi enviada para o recurso de ID 1 com os campos `id`, `title`, `body` e `userId`. A API retornou HTTP 200 OK e os valores enviados no corpo da resposta, incluindo o ID 1 e o título atualizado. As três asserções automatizadas foram aprovadas.
+
+O tempo de 405 ms e o tamanho de 1017 B foram registrados como observações, não como critérios de aprovação.
+
+### Observação
+
+JSONPlaceholder simula a atualização e não persiste as alterações no servidor.
+
+### Situação do caso
+
+CT-005 aprovado. CT-001 a CT-005 estão aprovados; CT-006 permanece pendente.
