@@ -95,12 +95,12 @@
 3. Informar `{{baseUrl}}/posts/9999`.
 4. Enviar a requisição.
 
-**Resultado esperado para esta API de demonstração**
-- HTTP 200.
+**Resultado esperado para esta execução da API de demonstração**
+- HTTP 404 Not Found.
 - Corpo JSON como objeto vazio (`{}`).
 
 **Observação de QA**
-- Esse é o comportamento específico observado/documentado para JSONPlaceholder. Em outro sistema, a resposta para recurso inexistente deve ser definida pelo contrato da API; não assumir automaticamente HTTP 200 ou 404.
+- Na execução realizada, JSONPlaceholder retornou HTTP 404 e objeto JSON vazio. Em outro sistema, a resposta para recurso inexistente deve ser definida pelo contrato da API.
 
 **Resultado obtido:** Pendente de execução.
 
