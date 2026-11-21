@@ -1,230 +1,166 @@
 # Registro de Execução — API Testing
 
-## Execuções individuais
+## Resumo da execução individual
 
-Os registros detalhados das seis requisições e o histórico de correção de CT-003 estão documentados abaixo.
+Os detalhes das execuções individuais e o histórico da correção de CT-003 estão registrados abaixo.
 
-## Execução 001 — CT-001: Listar publicações
+| Caso | Cenário | Resultado final |
+|---|---|---|
+| CT-001 | Listar publicações | Aprovado |
+| CT-002 | Consultar publicação existente | Aprovado |
+| CT-003 | Consultar publicação inexistente | Aprovado após correção e reexecução |
+| CT-004 | Criar publicação (simulada) | Aprovado |
+| CT-005 | Atualizar publicação (simulada) | Aprovado |
+| CT-006 | Excluir publicação (simulada) | Aprovado |
 
-| Campo | Resultado |
-|---|---|
-| Data da execução | 21/11/2026 |
-| Ferramenta | Postman |
-| Método | GET |
-| Endpoint | `{{baseUrl}}/posts` |
-| Status HTTP | 200 OK |
-| Tempo de resposta observado | 64 ms |
-| Tamanho da resposta observado | 7.78 KB |
-| Quantidade de itens retornados | 100 |
-| Resultado | APROVADO |
-
-### Validações automatizadas
-
-| Validação | Resultado |
-|---|---|
-| Status code igual a 200 | PASS |
-| Cabeçalho Content-Type indica JSON | PASS |
-| Corpo é uma lista com 100 publicações | PASS |
-| Primeiro item possui userId, id, title e body | PASS |
-
-**Resumo do Postman:** 4/4 testes aprovados.
-
-A requisição retornou HTTP 200 OK e uma lista com 100 publicações. Os campos esperados foram identificados no primeiro item. O tempo e o tamanho da resposta são observações, não critérios de aprovação, pois não foi definido SLA.
-
-## Execução 002 — CT-002: Consultar publicação existente
+## Execução individual 001 — CT-001: Listar publicações
 
 | Campo | Resultado |
 |---|---|
-| Data da execução | 21/11/2026 |
+| Data | 21/11/2026 |
 | Ferramenta | Postman |
-| Método | GET |
-| Endpoint | `{{baseUrl}}/posts/1` |
+| Método / endpoint | GET `{{baseUrl}}/posts` |
 | Status HTTP | 200 OK |
-| Tempo de resposta observado | 53 ms |
-| Tamanho da resposta observado | 1.1 KB |
+| Tempo observado | 64 ms |
+| Tamanho da resposta | 7.78 KB |
+| Itens retornados | 100 |
+| Resultado | APROVADO — 4/4 |
+
+Validações: status 200; Content-Type JSON; lista com 100 itens; primeiro item com `userId`, `id`, `title` e `body`.
+
+## Execução individual 002 — CT-002: Consultar publicação existente
+
+| Campo | Resultado |
+|---|---|
+| Data | 21/11/2026 |
+| Ferramenta | Postman |
+| Método / endpoint | GET `{{baseUrl}}/posts/1` |
+| Status HTTP | 200 OK |
+| Tempo observado | 53 ms |
+| Tamanho da resposta | 1.1 KB |
 | ID retornado | 1 |
-| Resultado | APROVADO |
+| Resultado | APROVADO — 4/4 |
 
-### Validações automatizadas
+Validações: status 200; ID igual a 1; campos principais presentes; tipos de dados válidos.
 
-| Validação | Resultado |
-|---|---|
-| Status code igual a 200 | PASS |
-| ID retornado igual a 1 | PASS |
-| Campos principais presentes | PASS |
-| Tipos dos campos válidos | PASS |
-
-**Resumo do Postman:** 4/4 testes aprovados.
-
-A API retornou HTTP 200 OK e o objeto JSON da publicação de ID 1, com os campos e tipos esperados. Tempo e tamanho são observações, sem SLA definido.
-
-## Execução 003 — CT-003: Consultar publicação inexistente (primeira execução)
+## Execução individual 003 — CT-003: Consultar publicação inexistente (primeira execução)
 
 | Campo | Resultado |
 |---|---|
-| Data da execução | 21/11/2026 |
-| Ferramenta | Postman |
-| Método | GET |
-| Endpoint | `{{baseUrl}}/posts/9999` |
+| Data | 21/11/2026 |
+| Método / endpoint | GET `{{baseUrl}}/posts/9999` |
 | Status HTTP observado | 404 Not Found |
-| Tempo de resposta observado | 160 ms |
-| Tamanho da resposta observado | 913 B |
-| Corpo observado | Objeto JSON vazio (`{}`) |
-| Resultado da automação inicial | REPROVADO — 1/2 |
+| Tempo observado | 160 ms |
+| Tamanho da resposta | 913 B |
+| Corpo | Objeto JSON vazio (`{}`) |
+| Resultado inicial | REPROVADO — 1/2 |
 
-A primeira versão do teste esperava HTTP 200, por isso uma asserção falhou. A validação do objeto JSON vazio passou. A análise identificou divergência no resultado esperado do teste, não evidência suficiente de defeito na API.
+A primeira versão esperava HTTP 200. A asserção do status falhou e a asserção do objeto vazio passou. A análise identificou uma expectativa incorreta no teste, sem evidência suficiente de defeito na API.
 
 ### Ação corretiva
 
-- Ajustar RF-003 e CT-003 para esperar HTTP 404 e objeto vazio.
-- Atualizar o script da coleção Postman.
-- Reexecutar CT-003.
+O critério de aceite e o script foram atualizados para validar HTTP 404 e objeto JSON vazio. O caso foi reexecutado.
 
-## Reexecução 004 — CT-003: Consultar publicação inexistente
+## Reexecução individual 004 — CT-003: Consultar publicação inexistente
 
 | Campo | Resultado |
 |---|---|
-| Data da execução | 21/11/2026 |
-| Ferramenta | Postman |
-| Método | GET |
-| Endpoint | `{{baseUrl}}/posts/9999` |
-| Status HTTP observado | 404 Not Found |
-| Tempo de resposta observado | 56 ms |
-| Tamanho da resposta observado | 929 B |
-| Corpo observado | Objeto JSON vazio (`{}`) |
-| Resultado | APROVADO |
+| Data | 21/11/2026 |
+| Método / endpoint | GET `{{baseUrl}}/posts/9999` |
+| Status HTTP | 404 Not Found |
+| Tempo observado | 56 ms |
+| Tamanho da resposta | 929 B |
+| Corpo | Objeto JSON vazio (`{}`) |
+| Resultado | APROVADO — 2/2 |
 
-### Validações automatizadas
+As duas validações passaram: status 404 e objeto JSON vazio. A execução inicial reprovada foi mantida como histórico de rastreabilidade.
 
-| Validação | Resultado |
-|---|---|
-| Status code igual a 404 | PASS |
-| Resposta é objeto JSON vazio | PASS |
-
-**Resumo do Postman:** 2/2 testes aprovados.
-
-Após a correção do critério e do script, as duas asserções passaram. A execução inicial foi preservada como histórico de rastreabilidade.
-
-## Execução 005 — CT-004: Criar publicação com dados válidos
+## Execução individual 005 — CT-004: Criar publicação com dados válidos
 
 | Campo | Resultado |
 |---|---|
-| Data da execução | 21/11/2026 |
-| Ferramenta | Postman |
-| Método | POST |
-| Endpoint | `{{baseUrl}}/posts` |
+| Data | 21/11/2026 |
+| Método / endpoint | POST `{{baseUrl}}/posts` |
 | Status HTTP | 201 Created |
-| Tempo de resposta observado | 197 ms |
-| Tamanho da resposta observado | 1.15 KB |
+| Tempo observado | 197 ms |
+| Tamanho da resposta | 1.15 KB |
 | ID retornado | 101 |
-| Resultado | APROVADO |
+| Resultado | APROVADO — 3/3 |
 
-### Validações automatizadas
+Validações: status 201; título retornado igual ao enviado; `userId` igual a 1. O JSONPlaceholder simula a criação e não persiste o registro.
 
-| Validação | Resultado |
-|---|---|
-| Status code igual a 201 | PASS |
-| Título retornado igual ao enviado | PASS |
-| userId retornado igual a 1 | PASS |
-
-**Resumo do Postman:** 3/3 testes aprovados.
-
-A API retornou HTTP 201 Created e os valores enviados no payload. JSONPlaceholder simula a criação e não persiste o registro; o ID 101 é o identificador retornado pela simulação.
-
-## Execução 006 — CT-005: Atualizar publicação com dados válidos
+## Execução individual 006 — CT-005: Atualizar publicação
 
 | Campo | Resultado |
 |---|---|
-| Data da execução | 21/11/2026 |
-| Ferramenta | Postman |
-| Método | PUT |
-| Endpoint | `{{baseUrl}}/posts/1` |
+| Data | 21/11/2026 |
+| Método / endpoint | PUT `{{baseUrl}}/posts/1` |
 | Status HTTP | 200 OK |
-| Tempo de resposta observado | 405 ms |
-| Tamanho da resposta observado | 1017 B |
+| Tempo observado | 405 ms |
+| Tamanho da resposta | 1017 B |
 | ID retornado | 1 |
-| Resultado | APROVADO |
+| Resultado | APROVADO — 3/3 |
 
-### Validações automatizadas
+Validações: status 200; ID igual a 1; título retornado igual ao enviado. O JSONPlaceholder simula a atualização e não persiste as alterações.
 
-| Validação | Resultado |
-|---|---|
-| Status code igual a 200 | PASS |
-| ID retornado igual a 1 | PASS |
-| Título retornado igual ao enviado | PASS |
-
-**Resumo do Postman:** 3/3 testes aprovados.
-
-A API retornou HTTP 200 OK e os valores enviados, incluindo ID 1 e o título atualizado. JSONPlaceholder simula a atualização e não persiste as alterações.
-
-## Execução 007 — CT-006: Excluir publicação
+## Execução individual 007 — CT-006: Excluir publicação
 
 | Campo | Resultado |
 |---|---|
-| Data da execução | 21/11/2026 |
-| Ferramenta | Postman |
-| Método | DELETE |
-| Endpoint | `{{baseUrl}}/posts/1` |
+| Data | 21/11/2026 |
+| Método / endpoint | DELETE `{{baseUrl}}/posts/1` |
 | Status HTTP | 200 OK |
-| Tempo de resposta observado | 159 ms |
-| Tamanho da resposta observado | 910 B |
-| Corpo observado | Objeto JSON vazio (`{}`) |
-| Resultado | APROVADO |
+| Tempo observado | 159 ms |
+| Tamanho da resposta | 910 B |
+| Corpo | Objeto JSON vazio (`{}`) |
+| Resultado | APROVADO — 2/2 |
 
-### Validações automatizadas
-
-| Validação | Resultado |
-|---|---|
-| Status code igual a 200 | PASS |
-| Resposta é um objeto JSON vazio | PASS |
-
-**Resumo do Postman:** 2/2 testes aprovados.
-
-A API retornou HTTP 200 OK e objeto JSON vazio. JSONPlaceholder simula a exclusão; a operação não remove dados persistidos no servidor.
+Validações: status 200 e corpo JSON vazio. O JSONPlaceholder simula a exclusão; os dados não são removidos de forma persistente no servidor.
 
 ---
 
-## Execução 008 — Execução em lote da coleção (Collection Runner)
+## Execução em lote 008 — Postman Collection Runner
 
 | Campo | Resultado |
 |---|---|
 | Data da execução | 21/11/2026 |
 | Ferramenta | Postman Collection Runner |
-| Coleção | QA Portfolio - JSONPlaceholder API Testing |
+| Coleção executada | QA Portfolio - JSONPlaceholder API Testing |
 | Iterações | 1 |
-| Requisições executadas | 6 |
-| Total de asserções automatizadas | 18 |
-| Testes aprovados | 18 |
-| Testes reprovados | 0 |
-| Testes ignorados | 0 |
+| Requisições | 6 |
+| Asserções automatizadas | 18 |
+| Aprovados | 18 |
+| Reprovados | 0 |
+| Ignorados | 0 |
 | Erros | 0 |
-| Duração total observada | 1,708 s |
-| Tempo médio de resposta observado | 133 ms |
-| Ambiente | Nenhum (variável baseUrl da coleção) |
+| Duração total | 1,708 s |
+| Tempo médio de resposta | 133 ms |
+| Ambiente | Nenhum; utilizada variável da coleção `baseUrl` |
 | Resultado | APROVADO |
 
 ### Resultado por cenário
 
-| ID | Cenário | Testes aprovados | Resultado |
-|---|---|---:|---|
-| CT-001 | Listar publicações (GET) | 4/4 | APROVADO |
-| CT-002 | Consultar publicação existente (GET) | 4/4 | APROVADO |
-| CT-003 | Consultar publicação inexistente (GET) | 2/2 | APROVADO |
-| CT-004 | Criar publicação (POST simulado) | 3/3 | APROVADO |
-| CT-005 | Atualizar publicação (PUT simulado) | 3/3 | APROVADO |
-| CT-006 | Excluir publicação (DELETE simulado) | 2/2 | APROVADO |
-| **Total** | **6 requisições** | **18/18** | **APROVADO** |
+| ID | Cenário | Resultado |
+|---|---|---|
+| CT-001 | GET — Listar publicações | 4/4 PASS |
+| CT-002 | GET — Consultar publicação existente | 4/4 PASS |
+| CT-003 | GET — Consultar publicação inexistente | 2/2 PASS |
+| CT-004 | POST — Criar publicação simulada | 3/3 PASS |
+| CT-005 | PUT — Atualizar publicação simulada | 3/3 PASS |
+| CT-006 | DELETE — Excluir publicação simulada | 2/2 PASS |
+| **Total** | **6 requisições** | **18/18 PASS** |
 
 ### Análise do QA
 
-A coleção foi executada integralmente pelo Collection Runner, com uma iteração e sem seleção de ambiente. As seis requisições foram processadas e todas as 18 asserções automatizadas passaram. O Runner registrou zero falhas, zero testes ignorados e zero erros.
+A coleção foi executada integralmente pelo Collection Runner, em uma iteração. As seis requisições foram processadas e as 18 asserções passaram. O Runner registrou zero falhas, zero testes ignorados e zero erros.
 
-A duração de 1,708 segundo e a média de resposta de 133 ms são métricas observadas nesta execução específica; não representam validação de SLA ou teste de desempenho.
+A duração de 1,708 segundo e a média de resposta de 133 ms são métricas observadas nessa execução específica; não representam validação de SLA ou teste de desempenho.
 
-### Conclusão da execução em lote
+### Conclusão
 
-A execução automatizada em lote confirmou os resultados dos seis cenários da coleção. CT-003 permaneceu aprovado após a correção documentada anteriormente. As operações POST, PUT e DELETE continuam sendo simulações da API JSONPlaceholder, sem persistência de dados.
+A execução em lote confirmou os resultados dos seis cenários da coleção. CT-003 permaneceu aprovado após a correção documentada. POST, PUT e DELETE são simulações da API JSONPlaceholder, sem persistência dos dados.
 
 ### Evidência
 
-Captura de tela do Postman Collection Runner com o resumo de 18 testes aprovados, zero falhas e os resultados dos seis cenários. Arquivo de evidência a ser versionado em `evidences/`.
+- Captura do resultado do Collection Runner: [CT-007-execucao-collection-runner.png](evidences/CT-007-execucao-collection-runner.png)
+- Galeria de evidências: [evidences/README.md](evidences/README.md)
