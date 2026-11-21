@@ -141,3 +141,42 @@ O tempo de 56 ms e o tamanho de 929 B foram registrados como observações, não
 ### Situação do caso
 
 CT-003 aprovado na reexecução. A execução inicial reprovada foi preservada neste relatório como histórico da identificação e correção da divergência no teste.
+
+
+## Execução 005 — CT-004: Criar publicação com dados válidos
+
+| Campo | Resultado |
+|---|---|
+| Data da execução | 21/11/2026 |
+| Ferramenta | Postman |
+| Método | POST |
+| Endpoint | `{{baseUrl}}/posts` |
+| Status HTTP | 201 Created |
+| Tempo de resposta observado | 197 ms |
+| Tamanho da resposta observado | 1.15 KB |
+| ID retornado | 101 |
+| Resultado | APROVADO |
+
+### Validações automatizadas
+
+| Validação | Resultado |
+|---|---|
+| Status code igual a 201 | PASS |
+| Título retornado igual ao enviado | PASS |
+| userId retornado igual a 1 | PASS |
+
+**Resumo do Postman:** 3/3 testes aprovados.
+
+### Análise do QA
+
+A requisição POST foi enviada com payload JSON válido contendo `title`, `body` e `userId`. A API retornou HTTP 201 Created, devolveu os valores enviados e apresentou o identificador 101. As três asserções automatizadas foram aprovadas.
+
+O tempo de 197 ms e o tamanho de 1.15 KB foram registrados como observações, não como critérios de aprovação.
+
+### Observação
+
+JSONPlaceholder simula a criação e não persiste o novo registro no servidor. O ID 101 é o identificador retornado pela simulação.
+
+### Situação do caso
+
+CT-004 aprovado. CT-001, CT-002, CT-003 e CT-004 estão aprovados; CT-005 e CT-006 permanecem pendentes.
