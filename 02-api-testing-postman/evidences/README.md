@@ -2,7 +2,7 @@
 
 Esta página reúne as evidências visuais das execuções realizadas no Postman durante os testes funcionais da API REST JSONPlaceholder, no recurso `/posts`.
 
-## Resumo das execuções
+## Resumo das execuções individuais
 
 | ID | Cenário | Método | Status HTTP | Testes automatizados |
 |---|---|---|---|---:|
@@ -14,6 +14,21 @@ Esta página reúne as evidências visuais das execuções realizadas no Postman
 | CT-006 | Excluir publicação (simulada) | DELETE | 200 OK | 2/2 |
 
 **Resultado final:** os seis cenários foram aprovados na execução final. O CT-003 teve uma primeira execução reprovada devido a uma expectativa de status incorreta; após a análise, o critério e o script foram ajustados e o caso foi reexecutado com sucesso. O histórico está documentado em [execution-results.md](../execution-results.md).
+
+## CT-007 — Execução completa pelo Collection Runner
+
+**Objetivo:** executar a coleção completa em uma única rodada e verificar o resultado consolidado de todos os cenários.
+
+- Requisições executadas: **6**
+- Asserções aprovadas: **18/18**
+- Falhas: **0**
+- Iterações: **1**
+- Duração observada: **1,708 s**
+- Tempo médio de resposta observado: **133 ms**
+
+![Evidência CT-007 — Execução da coleção no Runner](CT-007-execucao-collection-runner.png)
+
+[Visualizar arquivo original](CT-007-execucao-collection-runner.png)
 
 ---
 
