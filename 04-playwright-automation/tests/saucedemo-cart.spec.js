@@ -1,92 +1,72 @@
 
 import { test, expect } from '@playwright/test';
+import { CartPage } from '../pages/cart.page.js';
+import { LoginPage } from '../pages/login.page.js';
 
+// CT-005 - Adicionar produto ao carrinho
 test('CT-005 - Adicionar produto ao carrinho', async ({ page }) => {
 
-  // Acessar a aplicação
-  await page.goto('https://www.saucedemo.com/');
+  const loginPage = new LoginPage(page);
+  const cartPage = new CartPage(page);
 
-  // Realizar login
-  await page.locator('[data-test="username"]').fill('standard_user');
-  await page.locator('[data-test="password"]').fill('secret_sauce');
-  await page.locator('[data-test="login-button"]').click();
+  await loginPage.acessar();
+  await loginPage.realizarLogin('standard_user', 'secret_sauce');
 
-  // Validar acesso à página de produtos
   await expect(page).toHaveURL(/inventory.html/);
 
-  // Adicionar Sauce Labs Backpack ao carrinho
-  await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
+  await cartPage.adicionarMochila();
 
-  // Validar contador do carrinho
-  await expect(page.locator('[data-test="shopping-cart-badge"]'))
-    .toHaveText('1');
+  await expect(cartPage.cartBadge).toHaveText('1');
 
-  // Validar que o botão mudou para Remove
-  await expect(page.locator('[data-test="remove-sauce-labs-backpack"]'))
-    .toBeVisible();
+  await expect(
+    page.locator('[data-test="remove-sauce-labs-backpack"]')
+  ).toBeVisible();
 
 });
-
 
 test('CT-006 - Validar produto no carrinho', async ({ page }) => {
 
-  // Acessar a aplicação
-  await page.goto('https://www.saucedemo.com/');
+  const loginPage = new LoginPage(page);
+  const cartPage = new CartPage(page);
 
-  // Realizar login
-  await page.locator('[data-test="username"]').fill('standard_user');
-  await page.locator('[data-test="password"]').fill('secret_sauce');
-  await page.locator('[data-test="login-button"]').click();
+  await loginPage.acessar();
+  await loginPage.realizarLogin('standard_user', 'secret_sauce');
 
-  // Adicionar produto ao carrinho
-  await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
+  await cartPage.adicionarMochila();
+  await cartPage.acessarCarrinho();
 
-  // Acessar o carrinho
-  await page.locator('[data-test="shopping-cart-link"]').click();
-
-// Validar nome do produto
-await expect(
-  page.locator('[data-test="inventory-item-name"]')
-    .filter({ hasText: 'Sauce Labs Backpack' })
-).toHaveCount(1);
+  // Validar nome do produto
+  await expect(
+    cartPage.inventoryItemName.filter({
+      hasText: 'Sauce Labs Backpack'
+    })
+  ).toHaveCount(1);
 
   // Validar quantidade
-  await expect(page.locator('[data-test="item-quantity"]'))
-    .toHaveText('1');
+  await expect(cartPage.itemQuantity).toHaveText('1');
 
   // Validar preço
-  await expect(page.locator('[data-test="inventory-item-price"]'))
-    .toHaveText('$29.99');
+  await expect(cartPage.inventoryItemPrice).toHaveText('$29.99');
 
 });
 
-
 test('CT-007 - Remover produto do carrinho', async ({ page }) => {
 
-  // Acessar a aplicação
-  await page.goto('https://www.saucedemo.com/');
+  const loginPage = new LoginPage(page);
+  const cartPage = new CartPage(page);
 
-  // Realizar login
-  await page.locator('[data-test="username"]').fill('standard_user');
-  await page.locator('[data-test="password"]').fill('secret_sauce');
-  await page.locator('[data-test="login-button"]').click();
+  await loginPage.acessar();
+  await loginPage.realizarLogin('standard_user', 'secret_sauce');
 
-  // Adicionar produto
-  await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
+  await cartPage.adicionarMochila();
+  await cartPage.acessarCarrinho();
 
-  // Acessar carrinho
-  await page.locator('[data-test="shopping-cart-link"]').click();
+  await cartPage.removerMochila();
 
-  // Remover produto
-  await page.locator('[data-test="remove-sauce-labs-backpack"]').click();
-
-    // Validar que o produto não aparece mais no carrinho
-  await expect(
-    page.locator('[data-test="inventory-item"]')
-  ).toHaveCount(0);
+  // Validar que o produto foi removido
+  await expect(cartPage.cartItems).toHaveCount(0);
 
   // Validar que o indicador do carrinho desapareceu
-  await expect(
-    page.locator('[data-test="shopping-cart-badge"]')
-  ).toHaveCount(0);
+  await expect(cartPage.cartBadge).toHaveCount(0);
+
 });

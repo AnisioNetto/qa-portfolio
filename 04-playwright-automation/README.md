@@ -1,11 +1,12 @@
-
 # Projeto 04 — Automação de Testes Web com Playwright
 
 ## Sobre o projeto
 
-Projeto de automação de testes funcionais end-to-end desenvolvido com Playwright e JavaScript, utilizando a aplicação de demonstração SauceDemo.
+Projeto de automação de testes funcionais end-to-end desenvolvido com Playwright e JavaScript, utilizando a aplicação de demonstração [SauceDemo](https://www.saucedemo.com/).
 
 O objetivo é automatizar cenários relacionados ao login, gerenciamento do carrinho e processo de checkout.
+
+O projeto utiliza o padrão **Page Object Model (POM)** para organizar os elementos e as ações das páginas, promovendo reutilização de código, organização e facilidade de manutenção dos testes.
 
 ## Tecnologias utilizadas
 
@@ -13,6 +14,16 @@ O objetivo é automatizar cenários relacionados ao login, gerenciamento do carr
 - Playwright
 - Node.js
 - Visual Studio Code
+
+## Padrão de projeto
+
+Foi implementado o padrão Page Object Model (POM), separando os elementos e as ações das páginas da lógica dos testes.
+
+Classes implementadas:
+
+- `LoginPage`: gerenciamento do login e validações relacionadas.
+- `CartPage`: gerenciamento dos produtos no carrinho.
+- `CheckoutPage`: preenchimento dos dados e finalização da compra.
 
 ## Cenários automatizados
 
@@ -34,20 +45,23 @@ O objetivo é automatizar cenários relacionados ao login, gerenciamento do carr
 
 ## Resultado da execução
 
-- Total de testes: 13
-- Aprovados: 13
-- Falhas: 0
-- Ignorados: 0
-- Navegador: Chromium
-- Data da execução: 21/11/2026
-- Tempo total: 2,6 segundos
+- **Total de testes:** 13
+- **Aprovados:** 13
+- **Falhas:** 0
+- **Ignorados:** 0
+- **Navegador:** Chromium
+- **Data da execução:** 21/11/2026
+- **Tempo total:** 2,7 segundos
+- **Workers:** 6
+
+Execução realizada com sucesso utilizando o comando `npx playwright test --project=chromium`.
 
 ## Como executar o projeto
 
 ### 1. Instalar dependências
 
 ```bash
-npm install
+npm ci
 ```
 
 ### 2. Executar todos os testes no Chromium
@@ -70,6 +84,10 @@ npx playwright show-report
 │   ├── saucedemo-login.spec.js
 │   ├── saucedemo-cart.spec.js
 │   └── saucedemo-checkout.spec.js
+├── pages/
+│   ├── login.page.js
+│   ├── cart.page.js
+│   └── checkout.page.js
 ├── .gitignore
 ├── package.json
 ├── package-lock.json
@@ -79,12 +97,11 @@ npx playwright show-report
 
 ## Ambiente de teste
 
-Aplicação: https://www.saucedemo.com/
-
-Tipo de teste: Automação funcional end-to-end.
-
-Execução realizada localmente utilizando Playwright com Chromium.
+- **Aplicação:** https://www.saucedemo.com/
+- **Tipo de teste:** Automação funcional end-to-end.
+- **Navegador:** Chromium.
+- **Execução:** Local, utilizando Playwright.
 
 ## Observação
 
-Projeto desenvolvido para fins de estudo e portfólio profissional de QA.
+Projeto desenvolvido para fins de estudo, prática de automação de testes e composição de portfólio profissional de QA.

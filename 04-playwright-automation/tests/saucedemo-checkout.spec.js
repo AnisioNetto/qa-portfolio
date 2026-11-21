@@ -1,24 +1,23 @@
 
 import { test, expect } from '@playwright/test';
+import { CheckoutPage } from '../pages/checkout.page.js';
+import { CartPage } from '../pages/cart.page.js';
+import { LoginPage } from '../pages/login.page.js';
+
 
 test('CT-008 - Acessar formulário de checkout', async ({ page }) => {
 
-  // Acessar a aplicação
-  await page.goto('https://www.saucedemo.com/');
+  const loginPage = new LoginPage(page);
+  const cartPage = new CartPage(page);
+  const checkoutPage = new CheckoutPage(page);
 
-  // Realizar login
-  await page.locator('[data-test="username"]').fill('standard_user');
-  await page.locator('[data-test="password"]').fill('secret_sauce');
-  await page.locator('[data-test="login-button"]').click();
+  await loginPage.acessar();
+  await loginPage.realizarLogin('standard_user', 'secret_sauce');
 
-  // Adicionar produto ao carrinho
-  await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
+  await cartPage.adicionarMochila();
+  await cartPage.acessarCarrinho();
 
-  // Acessar carrinho
-  await page.locator('[data-test="shopping-cart-link"]').click();
-
-  // Iniciar checkout
-  await page.locator('[data-test="checkout"]').click();
+  await checkoutPage.iniciarCheckout();
 
   // Validar acesso ao formulário
   await expect(page).toHaveURL(/checkout-step-one.html/);
@@ -26,161 +25,157 @@ test('CT-008 - Acessar formulário de checkout', async ({ page }) => {
     .toHaveText('Checkout: Your Information');
 
   // Validar campos obrigatórios
-  await expect(page.locator('[data-test="firstName"]')).toBeVisible();
-  await expect(page.locator('[data-test="lastName"]')).toBeVisible();
-  await expect(page.locator('[data-test="postalCode"]')).toBeVisible();
+  await expect(checkoutPage.firstNameInput).toBeVisible();
+  await expect(checkoutPage.lastNameInput).toBeVisible();
+  await expect(checkoutPage.postalCodeInput).toBeVisible();
 
 });
 
 
+// CT-009 - Validar First Name obrigatório
 test('CT-009 - Validar First Name obrigatório', async ({ page }) => {
 
-  await page.goto('https://www.saucedemo.com/');
+  const loginPage = new LoginPage(page);
+  const cartPage = new CartPage(page);
+  const checkoutPage = new CheckoutPage(page);
 
-  await page.locator('[data-test="username"]').fill('standard_user');
-  await page.locator('[data-test="password"]').fill('secret_sauce');
-  await page.locator('[data-test="login-button"]').click();
+  await loginPage.acessar();
+  await loginPage.realizarLogin('standard_user', 'secret_sauce');
 
-  await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
-  await page.locator('[data-test="shopping-cart-link"]').click();
-  await page.locator('[data-test="checkout"]').click();
+  await cartPage.adicionarMochila();
+  await cartPage.acessarCarrinho();
+
+  await checkoutPage.iniciarCheckout();
 
   // Tentar continuar sem preencher os campos
-  await page.locator('[data-test="continue"]').click();
+  await checkoutPage.continuar();
 
   // Validar mensagem de erro
-  await expect(page.locator('[data-test="error"]'))
+  await expect(checkoutPage.errorMessage)
     .toContainText('Error: First Name is required');
 
 });
 
-
+// CT-010 - Validar Last Name obrigatório
 test('CT-010 - Validar Last Name obrigatório', async ({ page }) => {
 
-  await page.goto('https://www.saucedemo.com/');
+  const loginPage = new LoginPage(page);
+  const cartPage = new CartPage(page);
+  const checkoutPage = new CheckoutPage(page);
 
-  await page.locator('[data-test="username"]').fill('standard_user');
-  await page.locator('[data-test="password"]').fill('secret_sauce');
-  await page.locator('[data-test="login-button"]').click();
+  await loginPage.acessar();
+  await loginPage.realizarLogin('standard_user', 'secret_sauce');
 
-  await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
-  await page.locator('[data-test="shopping-cart-link"]').click();
-  await page.locator('[data-test="checkout"]').click();
+  await cartPage.adicionarMochila();
+  await cartPage.acessarCarrinho();
+
+  await checkoutPage.iniciarCheckout();
 
   // Preencher somente First Name
-  await page.locator('[data-test="firstName"]').fill('Anisio');
+  await checkoutPage.firstNameInput.fill('Anisio');
 
   // Tentar continuar sem Last Name
-  await page.locator('[data-test="continue"]').click();
+  await checkoutPage.continuar();
 
   // Validar mensagem de erro
-  await expect(page.locator('[data-test="error"]'))
+  await expect(checkoutPage.errorMessage)
     .toContainText('Error: Last Name is required');
 
 });
 
-
+// CT-011 - Validar Postal Code obrigatório
 test('CT-011 - Validar Postal Code obrigatório', async ({ page }) => {
 
-  await page.goto('https://www.saucedemo.com/');
+  const loginPage = new LoginPage(page);
+  const cartPage = new CartPage(page);
+  const checkoutPage = new CheckoutPage(page);
 
-  await page.locator('[data-test="username"]').fill('standard_user');
-  await page.locator('[data-test="password"]').fill('secret_sauce');
-  await page.locator('[data-test="login-button"]').click();
+  await loginPage.acessar();
+  await loginPage.realizarLogin('standard_user', 'secret_sauce');
 
-  await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
-  await page.locator('[data-test="shopping-cart-link"]').click();
-  await page.locator('[data-test="checkout"]').click();
+  await cartPage.adicionarMochila();
+  await cartPage.acessarCarrinho();
 
-  // Preencher First Name e Last Name
-  await page.locator('[data-test="firstName"]').fill('Anisio');
-  await page.locator('[data-test="lastName"]').fill('QA Tester');
+  await checkoutPage.iniciarCheckout();
 
-  // Tentar continuar sem Postal Code
-  await page.locator('[data-test="continue"]').click();
+  // Preencher First Name e Last Name, sem Postal Code
+  await checkoutPage.firstNameInput.fill('Anisio');
+  await checkoutPage.lastNameInput.fill('Oliveira');
+
+  await checkoutPage.continuar();
 
   // Validar mensagem de erro
-  await expect(page.locator('[data-test="error"]'))
+  await expect(checkoutPage.errorMessage)
     .toContainText('Error: Postal Code is required');
 
 });
 
 
+// CT-012 - Validar resumo do pedido
 test('CT-012 - Validar resumo do pedido', async ({ page }) => {
 
-  await page.goto('https://www.saucedemo.com/');
+  const loginPage = new LoginPage(page);
+  const cartPage = new CartPage(page);
+  const checkoutPage = new CheckoutPage(page);
 
-  await page.locator('[data-test="username"]').fill('standard_user');
-  await page.locator('[data-test="password"]').fill('secret_sauce');
-  await page.locator('[data-test="login-button"]').click();
+  await loginPage.acessar();
+  await loginPage.realizarLogin('standard_user', 'secret_sauce');
 
-  await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
-  await page.locator('[data-test="shopping-cart-link"]').click();
-  await page.locator('[data-test="checkout"]').click();
+  await cartPage.adicionarMochila();
+  await cartPage.acessarCarrinho();
 
-  // Preencher dados do cliente
-  await page.locator('[data-test="firstName"]').fill('Anisio');
-  await page.locator('[data-test="lastName"]').fill('QA Tester');
-  await page.locator('[data-test="postalCode"]').fill('38400-000');
+  await checkoutPage.iniciarCheckout();
 
-  // Avançar para o resumo
-  await page.locator('[data-test="continue"]').click();
+  await checkoutPage.preencherDados(
+    'Anisio',
+    'Oliveira',
+    '38400-000'
+  );
 
-  // Validar página de resumo
+  await checkoutPage.continuar();
+
   await expect(page).toHaveURL(/checkout-step-two.html/);
+
   await expect(page.locator('[data-test="title"]'))
     .toHaveText('Checkout: Overview');
 
-  // Validar produto
-  await expect(
-    page.locator('[data-test="inventory-item-name"]')
-      .filter({ hasText: 'Sauce Labs Backpack' })
-  ).toHaveCount(1);
-
-  // Validar preço e total
-  await expect(page.locator('[data-test="subtotal-label"]'))
-    .toHaveText('Item total: $29.99');
-
-  await expect(page.locator('[data-test="tax-label"]'))
-    .toHaveText('Tax: $2.40');
-
-  await expect(page.locator('[data-test="total-label"]'))
-    .toHaveText('Total: $32.39');
+  await expect(checkoutPage.subtotalLabel).toHaveText('Item total: $29.99');
+  await expect(checkoutPage.taxLabel).toHaveText('Tax: $2.40');
+  await expect(checkoutPage.totalLabel).toHaveText('Total: $32.39');
 
 });
 
-
+// CT-013 - Finalizar compra com sucesso
 test('CT-013 - Finalizar compra com sucesso', async ({ page }) => {
 
-  await page.goto('https://www.saucedemo.com/');
+  const loginPage = new LoginPage(page);
+  const cartPage = new CartPage(page);
+  const checkoutPage = new CheckoutPage(page);
 
-  // Login
-  await page.locator('[data-test="username"]').fill('standard_user');
-  await page.locator('[data-test="password"]').fill('secret_sauce');
-  await page.locator('[data-test="login-button"]').click();
+  await loginPage.acessar();
+  await loginPage.realizarLogin('standard_user', 'secret_sauce');
 
-  // Adicionar produto e acessar checkout
-  await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
-  await page.locator('[data-test="shopping-cart-link"]').click();
-  await page.locator('[data-test="checkout"]').click();
+  await cartPage.adicionarMochila();
+  await cartPage.acessarCarrinho();
 
-  // Preencher dados
-  await page.locator('[data-test="firstName"]').fill('Anisio');
-  await page.locator('[data-test="lastName"]').fill('QA Tester');
-  await page.locator('[data-test="postalCode"]').fill('38400-000');
+  await checkoutPage.iniciarCheckout();
 
-  await page.locator('[data-test="continue"]').click();
+  await checkoutPage.preencherDados(
+    'Anisio',
+    'Oliveira',
+    '38400-000'
+  );
 
-  // Finalizar compra
-  await page.locator('[data-test="finish"]').click();
+  await checkoutPage.continuar();
 
-  // Validar confirmação
+  await checkoutPage.finalizarCompra();
+
   await expect(page).toHaveURL(/checkout-complete.html/);
 
-  await expect(page.locator('[data-test="complete-header"]'))
+  await expect(checkoutPage.completeHeader)
     .toHaveText('Thank you for your order!');
 
-  await expect(page.locator('[data-test="complete-text"]'))
+  await expect(checkoutPage.completeText)
     .toContainText('Your order has been dispatched');
 
 });
