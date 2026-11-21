@@ -78,3 +78,32 @@ A captura de tela da execução no Postman deve ser mantida como evidência visu
 ### Observação
 
 Este registro corresponde à execução de CT-002 (consultar publicação existente). CT-001 e CT-002 estão aprovados; os demais casos permanecem pendentes.
+
+
+## Execução 003 — CT-003: Consultar publicação inexistente (primeira execução)
+
+| Campo | Resultado |
+|---|---|
+| Data da execução | 21/11/2026 |
+| Ferramenta | Postman |
+| Método | GET |
+| Endpoint | `{{baseUrl}}/posts/9999` |
+| Status HTTP observado | 404 Not Found |
+| Tempo de resposta observado | 160 ms |
+| Tamanho da resposta observado | 913 B |
+| Corpo observado | Objeto JSON vazio (`{}`) |
+| Resultado da automação inicial | REPROVADO — 1/2 |
+
+### Análise do QA
+
+A API retornou HTTP 404 Not Found e corpo JSON vazio. A primeira versão do teste esperava HTTP 200, por isso uma das duas asserções falhou. A segunda asserção, que verifica o objeto vazio, passou.
+
+A análise identificou uma incorreção no resultado esperado documentado, e não evidência suficiente de defeito na API. O critério e o script foram corrigidos para validar HTTP 404 e objeto vazio, conforme o comportamento observado.
+
+### Ação corretiva
+
+- Atualizar RF-003 e CT-003 para registrar HTTP 404 e objeto vazio.
+- Atualizar o script da coleção Postman para validar HTTP 404.
+- Reexecutar CT-003 após atualizar a requisição local no Postman.
+
+**Situação:** aguardando reexecução com a asserção corrigida.
