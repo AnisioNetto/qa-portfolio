@@ -1,35 +1,62 @@
 # Anísio Vasconcelos Oliveira
-### Quality Assurance | QA Analyst | Software Testing
+
+### QA Analyst | Quality Assurance | Software Testing
 
 Profissional de Quality Assurance (QA), com experiência em testes funcionais, integração, regressão e validação de APIs REST e SOAP.
 
-Atuação na elaboração de planos de teste, criação e execução de casos de teste, identificação e documentação de defeitos e validação de dados utilizando SQL.
+Atuação na elaboração de planos e casos de teste, execução de testes, identificação e documentação de defeitos e validação de dados utilizando SQL.
 
-## 🛠️ Habilidades técnicas
+## 🛠️ Competências técnicas
 
-- **Testes:** Funcionais, integração, regressão e retestes.
-- **API Testing:** Postman, REST, SOAP e XML.
+- **Testes de software:** funcionais, integração, regressão e retestes.
+- **Testes de API:** Postman, REST, SOAP e XML.
 - **Banco de dados:** SQL e DBeaver.
 - **Gestão de testes:** Azure DevOps, Test Plans, Bugs e Tasks.
-- **Automação:** Estudos e práticas com Playwright e Cypress.
 - **Metodologias:** BDD, Gherkin e análise de requisitos.
+- **Automação:** estudos e práticas com Playwright e Cypress.
+- **Versionamento:** Git e GitHub.
 
-## 📂 Projetos do portfólio
+## 📂 Projeto publicado
 
-| Projeto | Descrição |
-|---|---|
-| Test Cases | Elaboração e documentação de casos de teste |
-| API Testing | Testes de APIs REST utilizando Postman |
-| Bug Reports | Documentação de defeitos e evidências |
-| Regression Testing | Planejamento e execução de testes de regressão |
-| Test Automation | Práticas de automação de testes |
+### [API Testing — Postman](02-api-testing-postman/)
 
-## 🎯 Objetivo
+Projeto demonstrativo de testes funcionais de API REST utilizando a API pública JSONPlaceholder.
 
-Demonstrar conhecimentos práticos em Quality Assurance, contribuindo para a qualidade, confiabilidade e melhoria contínua de aplicações e sistemas.
+**O que foi desenvolvido:**
+- 6 cenários de teste para os métodos GET, POST, PUT e DELETE.
+- 18 asserções automatizadas com JavaScript no Postman.
+- Execução individual e execução em lote pelo Collection Runner.
+- Validação de códigos HTTP, estrutura JSON, campos e tipos de dados.
+- Documentação de requisitos, casos de teste, resultados e relatório final.
+- Evidências visuais das execuções.
+
+**Resultado da execução em lote:** 18 de 18 asserções aprovadas, sem falhas.
+
+**Acesse os artefatos:**
+- [Documentação e escopo do projeto](02-api-testing-postman/README.md)
+- [Coleção Postman para importar](02-api-testing-postman/collection/api-testing.postman_collection.json)
+- [Casos de teste](02-api-testing-postman/test-cases.md)
+- [Histórico de execução](02-api-testing-postman/execution-results.md)
+- [Relatório final](02-api-testing-postman/final-report.md)
+- [Galeria de evidências](02-api-testing-postman/evidences/README.md)
+
+> Observação: o projeto utiliza JSONPlaceholder para fins demonstrativos. As operações POST, PUT e DELETE são simuladas e não persistem alterações no servidor.
+
+## 📚 Em desenvolvimento
+
+- Novos projetos de documentação de testes funcionais e registro de defeitos.
+- Práticas de automação com Playwright e Cypress.
+- Aprimoramento contínuo de estratégias e técnicas de testes.
+
+## 🎯 Objetivo profissional
+
+Demonstrar conhecimentos práticos em Quality Assurance e contribuir para a qualidade, confiabilidade e melhoria contínua de aplicações e sistemas.
 
 ## 📫 Contato
 
-- GitHub: https://github.com/AnisioNetto
+- **GitHub:** [AnisioNetto](https://github.com/AnisioNetto)
+- **Portfólio:** [QA Portfolio](https://github.com/AnisioNetto/qa-portfolio)
 
-*Portfólio em desenvolvimento contínuo. Projetos demonstrativos com cenários fictícios.*
+---
+
+*Portfólio em evolução contínua, com projetos demonstrativos e evidências práticas de testes.*
