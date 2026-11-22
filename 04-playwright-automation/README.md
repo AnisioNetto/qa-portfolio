@@ -1,25 +1,35 @@
 # Projeto 04 — Automação de Testes Web com Playwright
 
+![Playwright](https://img.shields.io/badge/Playwright-Automation-2EAD33?logo=playwright&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-yellow?logo=javascript)
+![Node.js](https://img.shields.io/badge/Node.js-22-339933?logo=node.js&logoColor=white)
+![Tests](https://img.shields.io/badge/Tests-39%20Passed-success)
+
 ## Sobre o projeto
 
-Projeto de automação de testes funcionais end-to-end desenvolvido com Playwright e JavaScript, utilizando a aplicação de demonstração [SauceDemo](https://www.saucedemo.com/).
+Projeto de automação de testes funcionais end-to-end (E2E), desenvolvido com **JavaScript e Playwright**, utilizando a aplicação de demonstração [SauceDemo](https://www.saucedemo.com/).
 
-O objetivo é automatizar cenários relacionados ao login, gerenciamento do carrinho e processo de checkout.
+O objetivo é automatizar e validar os principais fluxos de uma aplicação de comércio eletrônico, contemplando autenticação, gerenciamento do carrinho de compras e processo de checkout.
 
-O projeto utiliza os padrões **Page Object Model (POM)** e **Fixtures** para promover reutilização de código, organização, manutenção e escalabilidade dos testes automatizados.
+A arquitetura utiliza os padrões **Page Object Model (POM)** e **Fixtures**, promovendo reutilização de código, organização, facilidade de manutenção e escalabilidade da suíte de testes.
 
-## Tecnologias utilizadas
+O projeto também conta com integração contínua utilizando **GitHub Actions**, permitindo a execução automatizada dos testes em diferentes navegadores.
 
-- JavaScript
-- Playwright
+## Tecnologias e ferramentas
+
+- JavaScript (ES6+)
 - Node.js
+- Playwright
 - Visual Studio Code
+- Git e GitHub
+- GitHub Actions
+- dotenv (gerenciamento de variáveis de ambiente)
 
-## Padrões e arquitetura
+## Arquitetura e padrões utilizados
 
 ### Page Object Model (POM)
 
-O padrão Page Object Model separa os elementos e as ações das páginas da lógica dos testes.
+O padrão Page Object Model separa os elementos e as ações das páginas da lógica dos testes automatizados.
 
 Classes implementadas:
 
@@ -27,11 +37,13 @@ Classes implementadas:
 - `CartPage`: gerenciamento dos produtos no carrinho.
 - `CheckoutPage`: preenchimento dos dados e finalização da compra.
 
-### Fixtures
+Essa abordagem reduz duplicidade de código e facilita a manutenção dos testes.
 
-Foram implementadas Fixtures personalizadas utilizando `base.extend()` do Playwright.
+### Fixtures personalizadas
 
-O arquivo `base.fixture.js` disponibiliza automaticamente os objetos das páginas para os testes, evitando a necessidade de instanciar manualmente cada classe.
+Foram implementadas Fixtures utilizando `base.extend()` do Playwright.
+
+O arquivo `base.fixture.js` disponibiliza automaticamente os objetos das páginas para os testes, evitando instanciações manuais e promovendo reutilização.
 
 Fixtures implementadas:
 
@@ -39,9 +51,9 @@ Fixtures implementadas:
 - `cartPage`
 - `checkoutPage`
 
-Essa abordagem melhora a reutilização de código e facilita a manutenção da suíte de testes.
-
 ## Cenários automatizados
+
+A suíte contempla 13 cenários funcionais:
 
 | ID | Cenário |
 |---|---|
@@ -59,38 +71,136 @@ Essa abordagem melhora a reutilização de código e facilita a manutenção da 
 | CT-012 | Validar resumo do pedido |
 | CT-013 | Finalizar compra com sucesso |
 
+## Testes cross-browser
+
+Os testes são executados em três projetos configurados no Playwright:
+
+| Navegador | Projeto | Testes |
+|---|---|---:|
+| Chromium | `chromium` | 13 |
+| Firefox | `firefox` | 13 |
+| WebKit (Safari) | `webkit` | 13 |
+| **Total** | | **39** |
+
+A execução cross-browser permite verificar o comportamento da aplicação em diferentes motores de navegador.
+
 ## Resultado da execução
 
-- **Total de testes:** 13
-- **Aprovados:** 13
-- **Falhas:** 0
-- **Ignorados:** 0
-- **Navegador:** Chromium
-- **Data da execução:** 21/11/2026
-- **Tempo total:** 2,9 segundos
-- **Workers:** 6
+**Última execução validada no GitHub Actions:**
 
-Execução realizada com sucesso utilizando o comando:
+| Indicador | Resultado |
+|---|---:|
+| Total de execuções | 39 |
+| Aprovados | 39 |
+| Falhas | 0 |
+| Navegadores | 3 |
+| Tempo dos testes | 46,7 segundos |
+
+**Status:** todos os 39 testes aprovados.
+
+[Consultar execuções no GitHub Actions](https://github.com/AnisioNetto/qa-portfolio/actions)
+
+## Integração contínua — GitHub Actions
+
+O projeto utiliza GitHub Actions para automatizar a execução dos testes.
+
+O workflow está localizado em:
+
+`.github/workflows/playwright.yml`
+
+O pipeline contempla:
+
+1. Checkout do repositório.
+2. Configuração do Node.js.
+3. Instalação das dependências.
+4. Instalação dos navegadores Chromium, Firefox e WebKit.
+5. Execução dos testes automatizados.
+6. Upload do relatório HTML.
+7. Upload das evidências de falhas, quando disponíveis.
+
+A execução é configurada para ocorrer em eventos de push e pull request direcionados à branch `main`.
+
+### Evidências de execução
+
+O Playwright está configurado para gerar:
+
+- Screenshots quando um teste falha.
+- Vídeos preservados em caso de falha.
+- Traces preservados em caso de falha.
+- Relatório HTML da execução.
+
+Os artefatos são disponibilizados pelo GitHub Actions para consulta e análise.
+
+## Como executar o projeto localmente
+
+### 1. Clonar o repositório
 
 ```bash
-npx playwright test --project=chromium
+git clone https://github.com/AnisioNetto/qa-portfolio.git
 ```
 
-## Como executar o projeto
+### 2. Acessar a pasta do projeto
 
-### 1. Instalar dependências
+```bash
+cd qa-portfolio/04-playwright-automation
+```
+
+### 3. Instalar as dependências
 
 ```bash
 npm ci
 ```
 
-### 2. Executar todos os testes no Chromium
+### 4. Instalar os navegadores
+
+```bash
+npx playwright install chromium firefox webkit
+```
+
+### 5. Configurar as variáveis de ambiente
+
+Copie o arquivo de exemplo:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+O arquivo `.env` deve conter as credenciais utilizadas nos testes:
+
+```env
+SAUCE_USERNAME=standard_user
+SAUCE_PASSWORD=secret_sauce
+```
+
+O arquivo `.env` não deve ser enviado ao repositório. As credenciais de demonstração devem ser utilizadas apenas para essa aplicação de testes.
+
+### 6. Executar todos os testes
+
+```bash
+npx playwright test
+```
+
+### 7. Executar em um navegador específico
+
+Chromium:
 
 ```bash
 npx playwright test --project=chromium
 ```
 
-### 3. Abrir relatório HTML
+Firefox:
+
+```bash
+npx playwright test --project=firefox
+```
+
+WebKit:
+
+```bash
+npx playwright test --project=webkit
+```
+
+### 8. Visualizar o relatório HTML
 
 ```bash
 npx playwright show-report
@@ -99,31 +209,46 @@ npx playwright show-report
 ## Estrutura do projeto
 
 ```text
-04-playwright-automation/
-├── fixtures/
-│   └── base.fixture.js
-├── pages/
-│   ├── login.page.js
-│   ├── cart.page.js
-│   └── checkout.page.js
-├── tests/
-│   ├── saucedemo-login.spec.js
-│   ├── saucedemo-cart.spec.js
-│   └── saucedemo-checkout.spec.js
-├── .gitignore
-├── package.json
-├── package-lock.json
-├── playwright.config.js
-└── README.md
+qa-portfolio/
+├── .github/
+│   └── workflows/
+│       └── playwright.yml
+│
+└── 04-playwright-automation/
+    ├── fixtures/
+    │   └── base.fixture.js
+    │
+    ├── pages/
+    │   ├── login.page.js
+    │   ├── cart.page.js
+    │   └── checkout.page.js
+    │
+    ├── tests/
+    │   ├── saucedemo-login.spec.js
+    │   ├── saucedemo-cart.spec.js
+    │   └── saucedemo-checkout.spec.js
+    │
+    ├── .env.example
+    ├── .gitignore
+    ├── package.json
+    ├── package-lock.json
+    ├── playwright.config.js
+    └── README.md
 ```
 
-## Ambiente de teste
+## Objetivo profissional
 
-- **Aplicação:** [SauceDemo](https://www.saucedemo.com/)
-- **Tipo de teste:** Automação funcional end-to-end.
-- **Navegador:** Chromium.
-- **Execução:** Local, utilizando Playwright.
+Este projeto faz parte do meu portfólio de QA e demonstra conhecimentos práticos em:
 
-## Observação
+- Automação de testes funcionais e end-to-end.
+- JavaScript e Playwright.
+- Organização de testes utilizando Page Object Model.
+- Fixtures personalizadas.
+- Testes cross-browser.
+- Gerenciamento de variáveis de ambiente.
+- Evidências e relatórios de execução.
+- Integração contínua com GitHub Actions.
 
-Projeto desenvolvido para fins de estudo, prática de automação de testes e composição de portfólio profissional de QA.
+**Repositório:** [github.com/AnisioNetto/qa-portfolio](https://github.com/AnisioNetto/qa-portfolio)
+
+**Aplicação utilizada:** [SauceDemo](https://www.saucedemo.com/)
