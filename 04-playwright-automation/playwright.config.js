@@ -30,13 +30,16 @@ export default defineConfig({
   }]
 ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  use: {
-    /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
+use: {
+  /* Captura screenshot quando o teste falhar */
+  screenshot: 'only-on-failure',
 
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
-  },
+  /* Grava vídeo e mantém somente quando o teste falhar */
+  video: 'retain-on-failure',
+
+  /* Salva o rastreamento quando o teste falhar */
+  trace: 'retain-on-failure',
+},
 
   /* Configure projects for major browsers */
   projects: [
