@@ -49,3 +49,12 @@ jobs:
           path: 04-playwright-automation/playwright-report/
           retention-days: 30
           if-no-files-found: ignore
+
+      - name: Upload Playwright Failure Evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-failure-evidence
+          path: 04-playwright-automation/test-results/
+          retention-days: 30
+          if-no-files-found: ignore
